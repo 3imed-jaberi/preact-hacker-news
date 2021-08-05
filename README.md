@@ -9,7 +9,7 @@ Web app for reading top hacker news stories.
   algn='center'
     src='demo.gif'
     alt='Web app for reading top hacker news stories demo.'
-    width='75%'
+    width='85%'
   />
 </div>
 
