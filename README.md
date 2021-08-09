@@ -16,6 +16,7 @@ Web app for reading top hacker news stories.
 ### Technologies
 
 - Preact.js v10.x.x https://preactjs.com
+- Valtio v1.x.x (state management) https://github.com/pmndrs/valtio
 - TypeScript v4.3.x https://www.typescriptlang.org
 - Vite v2.x.x https://vitejs.dev
 - Sass https://sass-lang.com
