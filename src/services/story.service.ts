@@ -24,7 +24,7 @@ export async function getNewStories(): Promise<number[]|null> {
  * returns the hackernews story for the given id
  * @param {number} id
  */
-export async function getStoryById(id: number): Promise<Story[]|null> {
+export async function getStoryById(id: number): Promise<Story|null> {
 	try {
 		const response = await fetch(`${HACKER_NEWS_API_ENDPOINT}/item/${id}.json`);
 		const json = await response.json();
