@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'preact/hooks';
+import { useEffect } from 'preact/hooks';
+
 import NewsItem from './components/NewsItem';
+import { useGlobalState } from './hooks';
 import { getNewStories } from './services';
 
 function App () {
-  const [allNewsRefs, setAllNewsRefs] = useState<number[]>([])
-  const [news, setNews] = useState<number[]>([])
+  const [globalState, snapState] = useGlobalState()
 
   const onScroll = () => {
     // isPassMaxOffsetHeightValue --condition
@@ -12,16 +13,18 @@ function App () {
   };
 
   const loadMoreNews = (size = 10) => {
-    const nextNews = allNewsRefs.splice(0, size)
-    setNews(news => [...news, ...nextNews])
+    const nextNews = globalState.allNews.splice(0, size)
+    globalState.displayedNews.push(...nextNews)
   };
 
   useEffect(() => {   
     (async () => {
       // fetch all news
-      const _allNewsRefs = await getNewStories();
+      const allNewsRefs = await getNewStories();
+      console.log('----<', allNewsRefs);
+      
       // save all news to state
-      setAllNewsRefs(_allNewsRefs!)
+      globalState.allNews.push(...(allNewsRefs as number[]))
       // dispaly only 20 news
       loadMoreNews(20);
       // quick way to handle the scroll event to display more 10 news.
@@ -29,11 +32,12 @@ function App () {
     })()
   }, [])
 
+  // TODO: add new component named News and render all news from global state :D!
   return (
     <div className="container">
       <header>Hacker News</header>
       <>
-        { news.map((item, index) => <NewsItem key={`${item}#${index}`} id={item} />) }
+        { snapState.displayedNews.map((item, index) => <NewsItem key={`${item}#${index}`} id={item} />) }
       </>
     </div>
   );
